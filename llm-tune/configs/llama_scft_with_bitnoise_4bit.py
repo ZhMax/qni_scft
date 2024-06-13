@@ -19,7 +19,7 @@ def model_configs():
 
     ### MODEL CHECKPOINT ###
     config.model_type = 'Auto'
-    config.model_name_or_path = '/home/llm_compression/LLaMA/Llama-2-7b-hf'
+    config.model_name_or_path = '/home/LLaMA/Llama-2-7b-hf'
     config.model_config_name = None
     config.tokenizer_name = None
     config.token = None
@@ -28,17 +28,17 @@ def model_configs():
     config.max_memory = 79
     ## SAVING DIRS ###
     # config.cache_dir = None
-    config.output_dir = '/home/exp_results/instruct/llama_quik4bit_normal_noise_owq_max'
+    config.output_dir = '/home/exp_results/Llama-2-7b-hf-scft-qni-4bit'
 
     ### TRAINING ###
-    config.run_name = 'noise_4bit_owq_max'
-    config.resume_from_checkpoint = '/home/exp_results/instruct/llama_quik4bit_normal_noise_owq_max/checkpoint-1500'
+    config.run_name = '4bit-qni-ft'
+    config.resume_from_checkpoint = None
     # config.num_train_epochs = 1
-    config.max_steps = 2000
+    config.max_steps = 1000
     config.learning_rate = 1e-4 #1e-4
     config.weight_decay = 0.0
     config.lr_scheduler_type = 'linear'
-    config.warmup_ratio =  0.015
+    config.warmup_ratio =  0.03
     config.seed = 11
     config.per_device_train_batch_size = 2
     config.per_device_eval_batch_size = 2
@@ -63,31 +63,31 @@ def model_configs():
 
     ### Path to a file containing sensitivity metrics
     config.outliers = {
-        'path_to_act_scales': '/home/llm_compression/Quantization/Weight_scales/obs_scales/llama7b_obs_owq_w4_ptb_max.pt',
+        'path_to_act_scales': 'sensitivity_metrics/salient_columns/metrics/llama-2-7b-obd-max-w4_ptb.pt',
         'fp_features_num': 128, #number of salient columns
     }
 
     ### QuantizedLinear
     config.QuantizedLinear = {
         'replace': True,
-        'training_mode': 'train_outlier' #train_full, train_outlier, train_quant
+        'training_mode': 'train_outlier' #train_full, train_outlier (only salient columns), train_quant (only non-salient columns)
     }
 
     ### Load Quantized Weight After Quik
     config.loading_quik_quant_weight = {
-        'load_weight': False,
-        'path_to_quant_params': '/home/llm_compression/Quantization/Quik/weights/llama7b_4w_16a_quant_params/quant_params.pt',
-        'learnable_scale': False
+        'load_weight': False, #load quantized weights with scales from state_dict to replace full-precision weights of the model
+        'path_to_quant_params': 'QUIK/quant_weights/llama7b_w4_a16_obd_max/quant_params.pt',
+        'learnable_scale': False #update quantization scales during training
     }
 
     ### BitNoiseQuant
     config.BitNoiseQuant = {
         'add_quant_noise': True,
-        'predict': False,
-        'compute_scale': True,
-        'noise_type': 'normal',
-        'learnable_scale': False,
-        'layer_bits': {'q': 4, 'k': 4, 'v': 4, 'o': 4, 'down': 4, 'gate': 4, 'up': 4}
+        'predict': False, #inject noise during model evaluation
+        'compute_scale': True, #compute quantization scales for noise 
+        'noise_type': 'normal', # 'normal', 'uniform'
+        'learnable_scale': False, #update noise scales during training
+        'layer_bits': {'q': 4, 'k': 4, 'v': 4, 'o': 4, 'down': 4, 'gate': 4, 'up': 4} #bit-widths of noise for each projection
     }
 
     ### NORM TWEEKING ###

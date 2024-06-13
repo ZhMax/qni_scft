@@ -115,7 +115,7 @@ class ModelArguments:
     )
     lora_init: bool = field(
         default=False,
-        metadata={"help": "True: Use zero and gaussian initialization; False: Load adapters from LoftQ in HF hub."},
+        metadata={"help": "True: Use zero and gaussian initialization."},
     )
     rank: int = field(
         default=64,
@@ -124,10 +124,6 @@ class ModelArguments:
     lora_alpha: int = field(
         default=16,
         metadata={"help": "LoftQ does not require this config. Used for QLoRA."},
-    )
-    quant_noise_config: dict = field(
-        default=None,
-        metadata={"help": "Parameters to add noise"},
     )
 
 @dataclass
@@ -169,7 +165,7 @@ class DataTrainingArguments:
     dataset_percentage: Optional[int] = field(
         default=100,
         metadata={
-            "help": "The percentage of the dataset used for computation"
+            "help": "The percentage of the dataset used for training"
         },  
     )
     seed: Optional[int] = field(

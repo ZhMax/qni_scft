@@ -3,7 +3,7 @@ This repository contains the code for the paper . QNI-SCFT updates only salient 
 
 ## Table of contents
 * [Installation](#installation)
-* [Sensitivity Metrics](#sensitivity_metrics)
+* [Salient Columns](#salient-columns)
 * [Train](#train)
 * [Eval](#eval)
 
@@ -63,7 +63,7 @@ pip install lm-eval
 
 Experiments were conducted on NVIDIA A100 GPU with 80GB memory. 
 
-## Sensitivity Metrics
+## Salient Columns
 To find salient columns for fine-tuning, it is necessary to compute sensitivity metrics. 
 The metrics for a full-precision LLM can be estimated by the following script: 
 ```bash
