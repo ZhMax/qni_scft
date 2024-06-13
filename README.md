@@ -71,7 +71,7 @@ bash sensitivity_metrics/salientcolumns/scripts/salient_metric.sh
 ```
 
 ## Train
-**Note: ** Only the LLaMA models can be fine-tuned. 
+**Note:** Only the LLaMA models can be fine-tuned. 
 
 To fine-tune salient columns of a full-precision LLM with quantization noise injection, run the following command:
 
