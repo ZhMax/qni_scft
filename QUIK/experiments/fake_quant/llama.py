@@ -19,7 +19,7 @@ def llama_parser():
 
     parser.add_argument(
         '--replace_QuantizedLinear',
-        help='Replace QuantizedLinear layers by Linear ones to quantize model',
+        help='Replace QuantizedLinear layers by Linear ones to quantize model after fine-tuning with noise injections',
         action='store_true'
     )
 
